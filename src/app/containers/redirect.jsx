@@ -14,7 +14,7 @@ class Redirect extends Component {
 
   render() {
     return (
-      <div className="max-size flex">
+      <div className="max-size flex flex-center">
         <h1 className="font-size">Welcome</h1>
       </div>
     );

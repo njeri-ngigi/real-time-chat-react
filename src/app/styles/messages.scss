@@ -1,0 +1,45 @@
+.contactsColumn {
+  width: 25%;
+}
+
+.messagesColumn {
+  width: 75%;
+  background-color: white;
+  color: black;
+  height: 100%;
+}
+
+.contactsList {
+  padding: 10px;
+
+  .contactInfo {
+    border-bottom: 1px solid white;
+    margin: 40px 20px;
+
+    p {
+      font-size: 0.8em
+    }
+  }
+}
+
+.message-bubble {
+  max-height: 100px;
+  min-width: 150px;
+  max-width: 260px;
+  margin: 30px 50px;
+  background-color: #95d0fc;
+  padding: 20px 30px;
+  border-radius: 40px;
+}
+
+.set-margin {
+  margin-left: 61%;
+}
+
+.float-right {
+  margin-left: 70%;
+  margin-top: -20px;
+  font-size: 0.8em;
+  text-decoration: underline;
+  font-style: italic;
+}
