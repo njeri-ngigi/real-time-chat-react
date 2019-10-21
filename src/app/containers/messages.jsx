@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ContactsList from '../components/contacts-list';
+import UserContacts from '../components/contacts/user-contacts';
 import MessagesComponent from '../components/messages';
 import { fetchUserContacts, fetchUserMessages } from '../redux/actions/contacts';
 import '../styles/common.scss';
@@ -9,8 +9,8 @@ import '../styles/messages.scss';
 
 class Messages extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchUserContacts());
+    const { dispatch, activeContact } = this.props;
+    dispatch(fetchUserContacts(activeContact));
   }
 
   fetchContactMessages(email) {
@@ -19,17 +19,19 @@ class Messages extends Component {
   }
 
   render() {
-    const {
-      userContacts: contacts, userMessages: messages,
-    } = this.props;
+    const { userMessages: messages } = this.props;
 
     return (
       <div className="flex max-size">
         <div className="contactsColumn">
-          <ContactsList contacts={contacts} />
+          <UserContacts />
         </div>
         <div className="messagesColumn">
           <MessagesComponent messages={messages} />
+          <div className="textarea">
+            <textarea placeholder="Enter your message" />
+            <button type="button">send</button>
+          </div>
         </div>
       </div>
     );
@@ -38,13 +40,13 @@ class Messages extends Component {
 
 Messages.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  userContacts: PropTypes.instanceOf(Array).isRequired,
   userMessages: PropTypes.instanceOf(Array).isRequired,
+  activeContact: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ contacts }) => {
-  const { userContacts, userMessages } = contacts;
-  return { userContacts, userMessages };
+  const { userMessages, activeContact } = contacts;
+  return { userMessages, activeContact };
 };
 
 
