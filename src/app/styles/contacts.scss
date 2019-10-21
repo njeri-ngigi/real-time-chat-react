@@ -1,0 +1,25 @@
+.contactInfo {
+  border-bottom: 1px solid white;
+  margin: 40px 20px;
+  width: 45%;
+  transition: 1s ease-in-out;
+  text-decoration: none;
+  color: white;
+  outline: none;
+
+  p {
+    font-size: 0.8em
+  }
+}
+
+.contactInfo:hover {
+  color: #95d0fc;
+  cursor: pointer;
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}

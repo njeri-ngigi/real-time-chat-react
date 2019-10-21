@@ -4,6 +4,7 @@ import history from './app/utils/history';
 import Home from './app/containers/home';
 import Redirect from './app/containers/redirect';
 import './app/styles/App.scss';
+import Contacts from './app/containers/contacts';
 
 
 const app = () => (
@@ -11,6 +12,7 @@ const app = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/redirect" component={Redirect} />
+      <Route path="/contacts" component={Contacts} />
     </Switch>
   </Router>
 );

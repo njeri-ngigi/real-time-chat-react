@@ -4,13 +4,14 @@ const initialState = {
   appContacts: [],
   userContacts: [],
   userMessages: [],
+  activeContact: '',
 };
 
 const contactsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.APP_CONTACTS: {
-      const { data } = action;
-      return { ...state, ...data };
+      const { appContacts } = action;
+      return { ...state, appContacts };
     }
 
     case actions.USER_CONTACTS: {
@@ -21,6 +22,11 @@ const contactsReducer = (state = initialState, action) => {
     case actions.USER_MESSAGES: {
       const { userMessages } = action;
       return { ...state, userMessages };
+    }
+
+    case actions.ACTIVE_CONTACT: {
+      const { activeContact } = action;
+      return { ...state, activeContact };
     }
 
     default:

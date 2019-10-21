@@ -7,18 +7,45 @@
   background-color: white;
   color: black;
   height: 100%;
+  padding-top: 60px;
 }
 
 .contactsList {
-  padding: 10px;
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  width: 25%;
+
+  .contactsButton {
+    background-color: #004480;
+    color: white;
+    padding: 15px;
+    bottom: 30px;
+    text-align: center;
+    width: 250px;
+    position: fixed;
+    text-decoration: none;
+    outline: none;
+    font-size: 0.9em;
+    cursor: pointer;
+  }
 
   .contactInfo {
     border-bottom: 1px solid white;
     margin: 40px 20px;
+    width: 80%;
+    transition: 1s ease-in-out;
 
     p {
       font-size: 0.8em
     }
+  }
+
+  .contactInfo:hover {
+    color: #95d0fc;
+    cursor: pointer;
   }
 }
 
@@ -42,4 +69,37 @@
   font-size: 0.8em;
   text-decoration: underline;
   font-style: italic;
+}
+
+.textarea {
+  position: fixed;
+  bottom: 20px;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  textarea {
+    width: 60%;
+    padding-top: 25px;
+    padding-left: 25px;
+    border: none;
+    outline: none;
+    border-radius: 0px 20px;
+    height: 50px;
+    text-align: justify;
+    background-color: rgba($color: #95d0fc, $alpha: 0.3);
+  }
+  button {
+    width: 130px;
+    margin: 10px;
+    padding: 15px;
+    border: none;
+    outline: none;
+    background-color: #004480;
+    color: white;
+    border-radius: 30px;
+    font-size: 0.8em;
+    cursor: pointer;
+  }
 }
