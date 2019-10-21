@@ -1,7 +1,10 @@
+const baseUrl = 'http://localhost:3001/api/v1';
 const urls = {
-  login: 'http://localhost:3001/api/v1/login',
-  loginRedirect: 'http://localhost:3001/api/v1/google-auth',
-  frontEndHomeUrl: 'http://localhost:3001/',
+  login: `${baseUrl}/login`,
+  loginRedirect: `${baseUrl}/google-auth`,
+  fetchAppContacts: `${baseUrl}/contacts`,
+  fetchUserContacts: `${baseUrl}/user/contacts`,
+  fetchUserMessages: `${baseUrl}/user/contacts/messages`,
 };
 
 export default urls;
