@@ -23,6 +23,11 @@ export const setActiveContact = (activeContact) => ({
   activeContact,
 });
 
+export const updateUserMessages = (message) => ({
+  type: actions.UPDATE_USER_MESSAGES,
+  message,
+});
+
 export const fetchAppContacts = () => (dispatch) => {
   const { token } = getUserFromLocalStorage();
   axios.get(urls.fetchAppContacts, { headers: { token } })
@@ -55,7 +60,24 @@ export const fetchUserContacts = (contact) => (dispatch) => {
     .then(({ data: { data } }) => {
       const email = contact || data[0].email;
       dispatch(setUserContacts(data));
+      dispatch(setActiveContact(email));
       if (email) dispatch(fetchUserMessages(email));
+    })
+    // eslint-disable-next-line no-console
+    .catch((error) => console.error(error));
+};
+
+export const sendMessage = (messageData) => (dispatch) => {
+  const { token } = getUserFromLocalStorage();
+  axios.post(urls.sendMessage, messageData,
+    {
+      headers: {
+        token,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(({ data: { data } }) => {
+      dispatch(updateUserMessages(data));
     })
     // eslint-disable-next-line no-console
     .catch((error) => console.error(error));

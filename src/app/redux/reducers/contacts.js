@@ -29,6 +29,13 @@ const contactsReducer = (state = initialState, action) => {
       return { ...state, activeContact };
     }
 
+    case actions.UPDATE_USER_MESSAGES: {
+      const { userMessages } = state;
+      const { message } = action;
+      const updatedMessages = [...userMessages, message];
+      return { ...state, userMessages: updatedMessages };
+    }
+
     default:
       return state;
   }

@@ -7,7 +7,8 @@
   background-color: white;
   color: black;
   height: 100%;
-  padding-top: 60px;
+  padding-top: 20px;
+  overflow: auto;
 }
 
 .contactsList {
@@ -89,6 +90,7 @@
     height: 50px;
     text-align: justify;
     background-color: rgba($color: #95d0fc, $alpha: 0.3);
+
   }
   button {
     width: 130px;
@@ -102,4 +104,9 @@
     font-size: 0.8em;
     cursor: pointer;
   }
+}
+
+.messages {
+  height: 87%;
+  overflow: auto;
 }

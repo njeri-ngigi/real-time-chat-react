@@ -5,6 +5,7 @@ const urls = {
   fetchAppContacts: `${baseUrl}/contacts`,
   fetchUserContacts: `${baseUrl}/user/contacts`,
   fetchUserMessages: `${baseUrl}/user/contacts/messages`,
+  sendMessage: `${baseUrl}/send`,
 };
 
 export default urls;
