@@ -3,17 +3,23 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { returnFirstName } from '../../utils/utils';
+import { setActiveContact, fetchUserMessages } from '../../redux/actions/contacts';
 import Aux from '../../hoc/aux';
 import '../../styles/contacts.scss';
-import { setActiveContact } from '../../redux/actions/contacts';
 
 class contactsComponent extends Component {
-  handleClick(email) {
-    const { history, dispatch } = this.props;
-    dispatch(setActiveContact(email));
-    history.push('/');
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(email) {
+    const { history, dispatch, reset } = this.props;
+    if (reset) reset();
+    dispatch(setActiveContact(email));
+    dispatch(fetchUserMessages(email));
+    history.push('/');
+  }
 
   render() {
     const { contacts } = this.props;
@@ -40,6 +46,7 @@ contactsComponent.propTypes = {
   contacts: PropTypes.instanceOf(Array).isRequired,
   history: PropTypes.instanceOf(Object).isRequired,
   dispatch: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 };
 
 export default connect()(withRouter(contactsComponent));
