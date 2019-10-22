@@ -1,25 +1,38 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import socketIOClient from 'socket.io-client';
 import UserContacts from '../components/contacts/user-contacts';
 import MessagesComponent from '../components/messages';
 import { fetchUserContacts, fetchUserMessages, sendMessage } from '../redux/actions/contacts';
 import '../styles/common.scss';
 import '../styles/messages.scss';
+import { origin } from '../utils/urls';
+import { getUserFromLocalStorage } from '../utils/utils';
 
 class Messages extends Component {
   constructor(props) {
     super(props);
     this.messageRef = createRef();
     this.state = { text: '' };
+    this.socket = socketIOClient(origin);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.scrollIntoView = this.scrollIntoView.bind(this);
+    this.resetTextArea = this.resetTextArea.bind(this);
   }
 
   componentDidMount() {
     const { dispatch, activeContact } = this.props;
     dispatch(fetchUserContacts(activeContact));
+
+    this.socket.on('send message', ({ socketId, sender, receiver }) => {
+      const { email: localEmail } = getUserFromLocalStorage();
+      if ((socketId !== this.socket.id) && (receiver === localEmail)) {
+        dispatch(fetchUserContacts(sender));
+        dispatch(fetchUserMessages(sender));
+      }
+    });
   }
 
   componentDidUpdate() {
@@ -28,6 +41,11 @@ class Messages extends Component {
 
   setRef(ref) {
     this.textarea = ref;
+  }
+
+  resetTextArea() {
+    this.textarea.value = '';
+    this.setState({ text: '' });
   }
 
   fetchContactMessages(email) {
@@ -40,9 +58,11 @@ class Messages extends Component {
     const { dispatch, activeContact } = this.props;
     const { text } = this.state;
     if (text) {
-      dispatch(sendMessage({ receiver: activeContact, message: text }));
-      this.textarea.value = '';
-      this.setState({ text: '' });
+      const { email } = getUserFromLocalStorage();
+      dispatch(sendMessage({
+        receiver: activeContact, message: text, sender: email,
+      }, this.socket));
+      this.resetTextArea();
     }
   }
 
@@ -58,11 +78,10 @@ class Messages extends Component {
 
   render() {
     const { userMessages: messages } = this.props;
-
     return (
       <div className="flex max-size">
         <div className="contactsColumn">
-          <UserContacts />
+          <UserContacts reset={this.resetTextArea} />
         </div>
         <div className="messagesColumn">
           <div className="messages">

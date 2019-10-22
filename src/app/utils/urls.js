@@ -1,3 +1,4 @@
+export const origin = 'http://localhost:3001';
 const baseUrl = 'http://localhost:3001/api/v1';
 const urls = {
   login: `${baseUrl}/login`,

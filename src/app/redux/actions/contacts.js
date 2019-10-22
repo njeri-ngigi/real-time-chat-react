@@ -59,17 +59,19 @@ export const fetchUserContacts = (contact) => (dispatch) => {
   axios.get(urls.fetchUserContacts, { headers: { token } })
     .then(({ data: { data } }) => {
       const email = contact || data[0].email;
+
       dispatch(setUserContacts(data));
       dispatch(setActiveContact(email));
-      if (email) dispatch(fetchUserMessages(email));
+
+      if (!contact) dispatch(fetchUserMessages(email));
     })
     // eslint-disable-next-line no-console
     .catch((error) => console.error(error));
 };
 
-export const sendMessage = (messageData) => (dispatch) => {
+export const sendMessage = ({ receiver, sender, message }, socket) => (dispatch) => {
   const { token } = getUserFromLocalStorage();
-  axios.post(urls.sendMessage, messageData,
+  axios.post(urls.sendMessage, { receiver, message },
     {
       headers: {
         token,
@@ -78,6 +80,10 @@ export const sendMessage = (messageData) => (dispatch) => {
     })
     .then(({ data: { data } }) => {
       dispatch(updateUserMessages(data));
+
+      if (sender !== receiver) {
+        socket.emit('send message', { socketId: socket.id, sender, receiver });
+      }
     })
     // eslint-disable-next-line no-console
     .catch((error) => console.error(error));
